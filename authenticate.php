@@ -1,6 +1,4 @@
-
 <?php
-
 include 'Database.php';
 include 'User.php';
 
@@ -9,9 +7,9 @@ if (isset($_POST['submit']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     $database = new Database();
     $db = $database->getConnection();
 
-    // Sanitize inputs using mysqli_real_escape_string
-    $matric = $db->real_escape_string($_POST['matric']);
-    $password = $db->real_escape_string($_POST['password']);
+    // Check if inputs are set
+    $matric = isset($_POST['matric']) ? $db->real_escape_string($_POST['matric']) : null;
+    $password = isset($_POST['password']) ? $db->real_escape_string($_POST['password']) : null;
 
     // Validate inputs
     if (!empty($matric) && !empty($password)) {
@@ -27,4 +25,6 @@ if (isset($_POST['submit']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
     } else {
         echo 'Please fill in all required fields.';
     }
+} else {
+    echo 'Invalid form submission.';
 }
