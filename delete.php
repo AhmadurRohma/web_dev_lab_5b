@@ -11,7 +11,7 @@ if (isset($_GET['Matric'])) {
     $user = new User($db);
 
     if ($user->deleteUser($Matric)) {
-        header("Location: read.php");
+        header("Location: display.php");
         exit();
     } else {
         echo "Error: Unable to delete user.";
