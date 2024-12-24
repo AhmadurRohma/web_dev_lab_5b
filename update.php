@@ -1,22 +1,21 @@
 
 <?php
-include '../includes/Database.php';
-include '../includes/User.php';
+include 'Database.php';
+include 'User.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $Matric = $_POST['Matric'];
-    $Name = $_POST['Name'];
-    $Role = $_POST['Role'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve the data from the POST request
+    $matric = $_POST['matric'];
+    $name = $_POST['name'];
+    $role = $_POST['role'];
 
+    // Create an instance of the Database class and get the connection
     $database = new Database();
     $db = $database->getConnection();
-    $user = new User($db);
 
-    if ($user->updateUser($Matric, $Name, $Role)) {
-        header("Location: ../pages/display.php");
-        exit();
-    } else {
-        echo "Error: Unable to update user.";
-    }
+    $user = new User($db);
+    $user->updateUser($matric, $name, $role);
+
+    // Close the connection
+    $db->close();
 }
-?>
