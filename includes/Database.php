@@ -2,7 +2,7 @@
 <?php
 class Database {
 	private $host = "localhost";
-	private $db_name = "Lab_5b";
+	private $db_name = "lab_5b";
 	private $username = "root";
 	private $password = "";
 	public $conn;
