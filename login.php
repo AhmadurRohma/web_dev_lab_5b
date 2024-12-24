@@ -17,6 +17,9 @@
         <input type="password" name="password" id="password" required><br>
         <input type="submit" name="submit" value="Submit">
     </form>
+    <p>
+    <a href="register_form.php">Register</a> here if you have not.
+</p>
 </body>
 
 </html>
