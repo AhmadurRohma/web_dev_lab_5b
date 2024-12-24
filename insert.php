@@ -1,17 +1,22 @@
-
 <?php
 include 'Database.php';
 include 'User.php';
 
-// Create an instance of the Database class and get the connection
 $database = new Database();
 $db = $database->getConnection();
-
-// Create an instance of the User class
 $user = new User($db);
 
-// Register the user using POST data
-$user->createUser($_POST['matric'], $_POST['name'], $_POST['password'], $_POST['role']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $Matric = $_POST['Matric'];
+    $Name = $_POST['Name'];
+    $Password = $_POST['Password'];
+    $Role = $_POST['Role'];
 
-// Close the connection
-$db->close();
+    if ($user->createUser($Matric, $Name, $Password, $Role)) {
+        header("Location: login.php");
+        exit();
+    } else {
+        echo "Error: Registration failed. Please check your input.";
+    }
+}
+?>

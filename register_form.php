@@ -1,30 +1,20 @@
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
+<?php include 'header.php'; ?>
+<div class="form-container">
+    <h2>Register</h2>
     <form action="insert.php" method="post">
-        <label for="matric">Matric:</label>
-        <input type="text" name="matric" id="matric" required><br>
+        <label for="Matric">Matric:</label>
+        <input type="text" name="Matric" id="Matric" required>
         <label for="name">Name:</label>
-        <input type="text" name="name" id="name" required><br>
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required><br>
-        <label for="role">Role:</label>
-        <select name="role" id="role" required>
-            <option value="">Please select</option>
+        <input type="text" name="Name" id="Name" required>
+        <label for="Password">Password:</label>
+        <input type="Password" name="Password" id="Password" required>
+        <label for="Role">Role:</label>
+        <select name="Role" id="Role" required>
             <option value="lecturer">Lecturer</option>
             <option value="student">Student</option>
-        </select><br>
-        <input type="submit" name="submit" value="Register">
+        </select>
+        <input type="submit" value="Register">
     </form>
-
+</div>
 </body>
-
 </html>

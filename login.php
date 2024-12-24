@@ -1,25 +1,21 @@
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-    <h1>Login Page</h1>
+<?php include 'header.php'; ?>
+<div class="form-container">
+    <h2>Login</h2>
     <form action="authenticate.php" method="post">
-        <label for="matric">Matric:</label>
-        <input type="text" name="matric" id="matric" required><br>
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required><br>
-        <input type="submit" name="submit" value="Submit">
+        <label for="Matric">Matric:</label>
+        <input type="text" name="Matric" id="Matric" required>
+        <label for="Password">Password:</label>
+        <input type="Password" name="Password" id="Password" required>
+        <input type="submit" name="submit" value="Login">
     </form>
-    <p>
+	<p>
     <a href="register_form.php">Register</a> here if you have not.
 </p>
+<?php
+    if (!empty($error_message)) {
+        echo "<p style='color: red;'>$error_message</p>";
+    }
+    ?>
+</div>
 </body>
-
 </html>

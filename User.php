@@ -1,106 +1,41 @@
 <?php
-class User
-{
+class User {
     private $conn;
+    private $table = "users";
 
-    // Constructor to initialize the database connection
-    public function __construct($db)
-    {
+    public function __construct($db) {
         $this->conn = $db;
     }
 
-    // Create a new user
-    public function createUser($matric, $name, $password, $role)
-    {
-        $password = password_hash($password, PASSWORD_DEFAULT);
-
-        $sql = "INSERT INTO users (matric, name, password, role) VALUES (?, ?, ?, ?)";
-        $stmt = $this->conn->prepare($sql);
-
-        if ($stmt) {
-            $stmt->bind_param("ssss", $matric, $name, $password, $role);
-            $result = $stmt->execute();
-
-            if ($result) {
-                return true;
-            } else {
-                return "Error: " . $stmt->error;
-            }
-
-            $stmt->close();
-        } else {
-            return "Error: " . $this->conn->error;
-        }
+    public function createUser($Matric, $Name, $password, $Role) {
+        $stmt = $this->conn->prepare("INSERT INTO {$this->table} (Matric, Name, Password, Role) VALUES (?, ?, ?, ?)");
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $stmt->bind_param("ssss", $Matric, $Name, $hashed_password, $Role);
+        return $stmt->execute();
     }
 
-    // Read all users
-    public function getUsers()
-    {
-        $sql = "SELECT matric, name, role FROM users";
-        $result = $this->conn->query($sql);
-        return $result;
+    public function getUser($Matric) {
+        $stmt = $this->conn->prepare("SELECT Matric, Name, Password, Role FROM {$this->table} WHERE Matric = ?");
+        $stmt->bind_param("s", $Matric);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
     }
 
-    // Read a single user by matric
-    public function getUser($matric)
-    {
-        $sql = "SELECT * FROM users WHERE matric = ?";
-        $stmt = $this->conn->prepare($sql);
-
-        if ($stmt) {
-            $stmt->bind_param("s", $matric);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $user = $result->fetch_assoc();
-
-            $stmt->close();
-            return $user;
-        } else {
-            return "Error: " . $this->conn->error;
-        }
+    public function getUsers() {
+        $query = "SELECT Matric, Name, Role FROM {$this->table}";
+        return $this->conn->query($query);
     }
 
-    // Update a user's information
-    public function updateUser($matric, $name, $role)
-    {
-        $sql = "UPDATE users SET name = ?, role = ? WHERE matric = ?";
-        $stmt = $this->conn->prepare($sql);
-
-        if ($stmt) {
-            $stmt->bind_param("sss", $name, $role, $matric);
-            $result = $stmt->execute();
-
-            if ($result) {
-                return true;
-            } else {
-                return "Error: " . $stmt->error;
-            }
-
-            $stmt->close();
-        } else {
-            return "Error: " . $this->conn->error;
-        }
+    public function deleteUser($Matric) {
+        $stmt = $this->conn->prepare("DELETE FROM {$this->table} WHERE Matric = ?");
+        $stmt->bind_param("s", $Matric);
+        return $stmt->execute();
     }
 
-    // Delete a user by matric
-    public function deleteUser($matric)
-    {
-        $sql = "DELETE FROM users WHERE matric = ?";
-        $stmt = $this->conn->prepare($sql);
-
-        if ($stmt) {
-            $stmt->bind_param("s", $matric);
-            $result = $stmt->execute();
-
-            if ($result) {
-                return true;
-            } else {
-                return "Error: " . $stmt->error;
-            }
-
-            $stmt->close();
-        } else {
-            return "Error: " . $this->conn->error;
-        }
+    public function updateUser($Matric, $Name, $Role) {
+        $stmt = $this->conn->prepare("UPDATE {$this->table} SET Name = ?, Role = ? WHERE Matric = ?");
+        $stmt->bind_param("sss", $Name, $Role, $Matric);
+        return $stmt->execute();
     }
 }
+?>
